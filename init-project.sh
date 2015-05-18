@@ -30,7 +30,7 @@ git commit -m "Initial Commit"
 
 echo "Creating Heroku app & pushing"
 
-heroku create --stack cedar
+heroku create vkcom-ads --stack cedar
 git push heroku master
 
 echo "All Done!"
