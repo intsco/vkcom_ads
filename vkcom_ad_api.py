@@ -4,6 +4,10 @@ import tornado.web
 import os.path
 from vkcom_click_validator import ClickValidator
 
+# import and define tornado-y things
+from tornado.options import define, options
+
+define("port", default=5000, help="run on the given port", type=int)
 
 base_path = os.path.dirname(os.path.realpath(__file__)) + '/data/'
 
@@ -57,6 +61,13 @@ if __name__ == "__main__":
         (r"/validate/?", ValidateHandler),
         (r"/upload/?", UploadHandler),
     ])
-    
-    application.listen(8899)
+
+    # application.listen(8899)
+    # tornado.ioloop.IOLoop.instance().start()
+
+    tornado.options.parse_command_line()
+    http_server = tornado.httpserver.HTTPServer(application)
+    http_server.listen(os.environ.get("PORT", 5000))
+
+    # start it up
     tornado.ioloop.IOLoop.instance().start()
