@@ -42,6 +42,9 @@ class UploadHandler(tornado.web.RequestHandler):
         data_fn = base_path + 'click_data.gz'
         data = self.request.files['filedata'][0]['body']
 
+        if not os.path.exists(base_path):
+            os.makedirs(base_path)
+
         open(data_fn, 'w').writelines(data)
 
         if os.path.isfile(report_fn):
